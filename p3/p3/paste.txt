@@ -1,0 +1,42 @@
+
+he header for each allocated and free block
+ * It also serves as the footer for each free block
+ * The blocks are ordered in the increasing order of addresses 
+ */
+typedef struct block_tag{
+
+  int size_status;
+  
+ /*
+  * Size of the block is always a multiple of 4
+  * => last two bits are always zero - can be used to store other information
+  *
+  * LSB -> Least Significant Bit (Last Bit)
+  * SLB -> Second Last Bit 
+  * LSB = 0 => free block
+  * LSB = 1 => allocated/busy block
+  * SLB = 0 => previous block is free
+  * SLB = 1 => previous block is allocated/busy
+  * 
+  * When used as the footer the last two bits should be zero
+  */
+
+ /*
+  * Examples:
+  * 
+  * For a busy block with a payload of 24 bytes (i.e. 24 bytes data + an additional 4 bytes for header)
+  * Header:
+  * If the previous block is allocated, size_status should be set to 31
+  * If the previous block is free, size_status should be set to 29
+  * 
+  * For a free block of size 28 bytes (including 4 bytes for header + 4 bytes for footer)
+  * Header:
+  * If the previous block is allocated, size_status should be set to 30
+  * If the previous block is free, size_status should be set to 28
+  * Footer:
+  * size_status should be 28
+  * 
+  */
+
+} block_tag;
+ck_tag *footer = (block_tag*)((char*)first_block + alloc_size - 4);! So, I open a vim window via put
